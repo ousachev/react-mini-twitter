@@ -1,0 +1,17 @@
+.bottom-panel {
+  margin-top: 20px;
+  position: relative;
+}
+
+.bottom-panel .new-post-label {
+  width: auto;
+  flex-grow: 1;
+  margin-right: 3px;
+}
+
+.error {
+  color: red;
+  position: absolute;
+  bottom: -25px;
+  left: 20px;
+}
