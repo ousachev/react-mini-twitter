@@ -1,59 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import "./post-add-form.css";
 
-export default class PostAddForm extends React.Component {
-  state = {
-    text: "",
-    textError: ""
+const PostAddForm = (props) => {
+  const { onAdd } = props;
+  const [text, setText] = useState("");
+  const [textError, setTextError] = useState("");
+
+  const checkEmptyStr = (value) => {
+    value ? setTextError("Напишите что нибудь") : setTextError("");
+    return !value;
   };
 
-  checkEmptyStr = value => {
-    if (value) {
-      this.setState({
-        textError: "Напишите что нибудь"
-      });
-    } else {
-      this.setState({
-        textError: ""
-      });
-      return true;
-    }
+  const onValueChange = (e) => {
+    setText(e.target.value);
+
+    checkEmptyStr(e.target.value === "");
   };
 
-  onValueChange = e => {
-    this.setState({
-      text: e.target.value
-    });
-    this.checkEmptyStr(e.target.value === "");
-  };
-
-  onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.text);
-    if (this.checkEmptyStr(this.state.text === "")) {
-      this.props.onAdd(this.state.text);
+    if (checkEmptyStr(text === "")) {
+      onAdd(text);
     }
-    this.setState({
-      text: ""
-    });
+    setText("");
   };
 
-  render() {
-    const { text, textError } = this.state;
-    return (
-      <form className="bottom-panel d-flex" onSubmit={this.onSubmit}>
-        <input
-          type="text"
-          placeholder="О чем вы  думаете сейчас?"
-          className="form-control new-post-label"
-          onChange={this.onValueChange}
-          value={text}
-        />
-        <span className="error">{textError}</span>
-        <button type="submit" className="btn btn-outline-secondary">
-          Добавить
-        </button>
-      </form>
-    );
-  }
-}
+  return (
+    <form className="bottom-panel d-flex" onSubmit={onSubmit}>
+      <input
+        type="text"
+        placeholder="О чем вы  думаете сейчас?"
+        className="form-control new-post-label"
+        onChange={onValueChange}
+        value={text}
+      />
+      <span className="error">{textError}</span>
+      <button type="submit" className="btn btn-outline-secondary">
+        Добавить
+      </button>
+    </form>
+  );
+};
+
+export default PostAddForm;

@@ -1,5 +1,6 @@
 import React from "react";
 import "./app-header.css";
+
 const AppHeader = ({ liked, allPosts }) => {
   const sklonenie = (number, txt, cases = [2, 0, 1, 1, 1, 2]) =>
     txt[
